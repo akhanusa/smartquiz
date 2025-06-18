@@ -6,6 +6,8 @@ from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
+import random
+
 import os
 import streamlit as st
 
@@ -73,7 +75,31 @@ def get_qa_chain():
 
     return chain
 
+def generate_random_question_from_vectordb():
+    # Load the vector database
+    vectordb = FAISS.load_local(vectordb_file_path, instructor_embeddings, allow_dangerous_deserialization=True)
+    
+    # Extract raw documents
+    documents = vectordb.docstore._dict.values()
+    
+    # Filter out only those with content
+    documents_with_content = [doc for doc in documents if doc.page_content]
+    
+    # Randomly select a document
+    random_doc = random.choice(documents_with_content)
+    
+    # Use the document's text to generate a synthetic question
+    return f"What can you tell me about: {random_doc.page_content.strip()[:100]}?"
+
+
 if __name__ == "__main__":
     create_vector_db()
     chain = get_qa_chain()
-    print(chain("Do you have javascript course?"))
+    
+    # Generate a random question
+    random_question = generate_random_question_from_vectordb()
+    print("Random Question:", random_question)
+
+    # Get answer from the chain
+    result = chain(random_question)
+    print("Answer:", result['result'])
