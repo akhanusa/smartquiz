@@ -89,7 +89,7 @@ def generate_random_question_from_vectordb():
     random_doc = random.choice(documents_with_content)
     
     # Use the document's text to generate a synthetic question
-    return f"What can you tell me about: {random_doc.page_content.strip()[:100]}?"
+    return f"{random_doc.page_content[prompt].strip()[:100]}?"
 
 
 if __name__ == "__main__":

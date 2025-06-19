@@ -66,7 +66,7 @@ with col1:
 with col2:
     if st.button("Clear Q&A", key="clear_main_qa"): # Changed key for uniqueness
         st.session_state.question = ""
-        st.session_state.question_input = "" # Clear the text_input as well
+#        st.session_state.question_input = "" # Clear the text_input as well
         st.rerun()
 
 # --- New Quiz Section ---
