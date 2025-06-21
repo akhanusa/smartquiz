@@ -95,7 +95,7 @@ def generate_random_question_from_vectordb():
     if match:
         question = match.group(1)
     else:
-	question = "No question found."
+        question = "No question found."
 
     # Use the document's text to generate a synthetic question
     # return f"{random_doc.page_content.strip()[:100]}?"
