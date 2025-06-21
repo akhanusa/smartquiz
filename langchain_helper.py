@@ -7,6 +7,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
 import random
+import re
 
 import os
 import streamlit as st
@@ -88,8 +89,17 @@ def generate_random_question_from_vectordb():
     # Randomly select a document
     random_doc = random.choice(documents_with_content)
     
+    # Extract the question between 'prompt:' and 'response:'
+    match = re.search(r'prompt:\s*(.*?)\s*response:', random_doc.page_content)
+
+    if match:
+        question = match.group(1)
+    else:
+	question = "No question found."
+
     # Use the document's text to generate a synthetic question
-    return f"{random_doc.page_content.strip()[:100]}?"
+    # return f"{random_doc.page_content.strip()[:100]}?"
+    return question 
 
 
 if __name__ == "__main__":
