@@ -1,6 +1,7 @@
 import streamlit as st
 from langchain_helper import get_qa_chain, create_vector_db, generate_random_question_from_vectordb
-from langchain_community.cross_encoders import HuggingFaceCrossEncoder # For similarity comparison
+# from langchain_community.cross_encoders import HuggingFaceCrossEncoder # For similarity comparison
+from sentence_transformers import CrossEncoder
 
 # --- Mock credential store ---
 AUTHORIZED_USERS = {
@@ -104,7 +105,8 @@ else:
                 st.warning("Please type your answer before submitting.")
             else:
                 # Compare answers
-                model = HuggingFaceCrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+                # model = HuggingFaceCrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+                model = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
                 
                 # We compare user's answer against the RAG's answer
                 # A higher score means closer semantic meaning
