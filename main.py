@@ -26,7 +26,7 @@ if "user_quiz_answer" not in st.session_state:
     st.session_state.user_quiz_answer = ""
 
 # --- Title ---
-st.title("Codebasics Q&A 🌱")
+st.title("Smart Quiz")
 
 # --- Logout Option ---
 if st.session_state.authenticated:
